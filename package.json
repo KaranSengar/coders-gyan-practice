@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "formate:fix": "prettier . --write",
+    "formate:check": "prettier . --check",
+    "eslint:fix": "eslint . --fix",
+    "eslint:check": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.0.10",
+    "eslint": "^9.39.2",
+    "globals": "^17.1.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1"
+  },
+  "dependencies": {
+    "husky": "^9.1.7",
+    "prettier": "3.8.1"
+  }
+}

@@ -1,6 +1,4 @@
-console.log("hi karan");
+import server from "./app";
 
-const name = (n: string) => {
-  return n;
-};
-name("karna");
+console.log("🚀 Server startin.");
+server();

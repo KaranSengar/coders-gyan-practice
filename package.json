@@ -2,7 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
+    "build": "tsc",
+    "start": "nodemon --watch dist/index.js",
+    "dev": "nodemon --watch src --ext ts,js --exec ts-node src/index.ts",
     "formate:fix": "prettier . --write",
     "formate:check": "prettier . --check",
     "eslint:fix": "eslint . --fix",
@@ -21,15 +25,20 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@types/express": "^5.0.6",
     "@types/node": "^25.0.10",
     "eslint": "^9.39.2",
     "globals": "^17.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "nodemon": "^3.1.11",
     "prettier": "3.8.1"
   }
 }

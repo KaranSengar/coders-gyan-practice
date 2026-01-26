@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
-import { config } from "./config/index";
 import express from "express";
+import { logger } from "./config/logger";
+import { globalErrorHandler } from "./config/globalhandler";
+import config from "./config";
 const server = () => {
   const app = express();
 
@@ -9,9 +11,9 @@ const server = () => {
   app.get("/", (req: Request, res: Response) => {
     res.json({ message: "kar" });
   });
-
+  app.use(globalErrorHandler);
   app.listen(PORT, () => {
-    console.log("server is connected on port", PORT);
+    logger.info("server is connected on port", PORT);
   });
 };
 

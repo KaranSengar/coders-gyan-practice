@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # App kis port pe chalegi
-EXPOSE 5501
+EXPOSE 5001
 
 # App run karne ka command
 CMD ["npm", "run", "dev"]

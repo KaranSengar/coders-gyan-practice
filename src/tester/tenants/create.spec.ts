@@ -61,6 +61,30 @@ describe("POST /tenants", () => {
       expect(tenants).toHaveLength(1);
       expect(tenants[0].name).toBe(userData.name);
     });
+    it("should create a tenant address in the database ", async () => {
+      const userData = {
+        name: "tenantname",
+        address: "tenant adress",
+      };
+      //act
+      await request(app)
+        .post("/tenants")
+        .set("Cookie", [`accessToken=${admintoken}`])
+        .send(userData);
+
+      const tenantrepo = connection.getRepository(Tenant);
+
+      const tenants = await tenantrepo.find();
+      expect(tenants).toHaveLength(1);
+      expect(tenants[0].address).toBe(userData.address);
+    });
+
+
+
+
+
+
+
 
     it("should return 401 if user not authencated", async () => {
       const userData = {

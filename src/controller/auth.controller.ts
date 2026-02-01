@@ -12,10 +12,10 @@ import { Role } from "../constrant";
 
 export class AuthController {
   constructor(
-    private userservice: Userservice,
-    private tokenservice: TokenService,
-    private credetialservice: CredetialsService,
-  ) {}
+    private readonly userservice: Userservice,
+    private readonly tokenservice: TokenService,
+    private readonly credetialservice: CredetialsService,
+  ) { }
 
   async register(req: RegisterUser, res: Response, next: NextFunction) {
     const errors = validationResult(req);
@@ -30,7 +30,7 @@ export class AuthController {
       firstName,
       lastName,
       email,
-      password: "*****",
+      password,
     });
     try {
       const user = await this.userservice.create({
@@ -93,7 +93,7 @@ export class AuthController {
     const { email, password } = req.body;
     logger.debug("new request to login a user", {
       email,
-      password: "*****",
+      password,
     });
     try {
       const user = await this.userservice.findByEmail(email);

@@ -6,7 +6,7 @@ import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
 export class TenantController {
-  constructor(private tenantservie: TenantService) {}
+  constructor(private readonly tenantservice: TenantService) { }
   async create(req: CreateTenantRequest, res: Response, next: NextFunction) {
     // Validation
     const result = validationResult(req);
@@ -18,7 +18,7 @@ export class TenantController {
     logger.debug("Request for creating a tenant", req.body);
 
     try {
-      const tenant = await this.tenantservie.create({ name, address });
+      const tenant = await this.tenantservice.create({ name, address });
       logger.info("Tenant has been created", { id: tenant.id });
 
       res.status(201).json({ id: tenant.id });
@@ -36,7 +36,7 @@ export class TenantController {
     const { name, address } = req.body;
     const tenantId = req.params.id;
 
-    if (isNaN(Number(tenantId))) {
+    if (Number.isNaN(Number(tenantId))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
@@ -44,7 +44,7 @@ export class TenantController {
     logger.debug("Request for updating a tenant", req.body);
 
     try {
-      await this.tenantservie.update(Number(tenantId), {
+      await this.tenantservice.update(Number(tenantId), {
         name,
         address,
       });
@@ -58,7 +58,7 @@ export class TenantController {
   }
   async getAll(req: CreateTenantRequest, res: Response, next: NextFunction) {
     try {
-      const tenants = await this.tenantservie.getAll();
+      const tenants = await this.tenantservice.getAll();
 
       logger.info("All tenant have been fetched");
       res.json(tenants);
@@ -69,13 +69,13 @@ export class TenantController {
   async getOne(req: CreateTenantRequest, res: Response, next: NextFunction) {
     const tenantId = req.params.id;
 
-    if (isNaN(Number(tenantId))) {
+    if (Number.isNaN(Number(tenantId))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
 
     try {
-      const tenant = await this.tenantservie.getById(Number(tenantId));
+      const tenant = await this.tenantservice.getById(Number(tenantId));
 
       if (!tenant) {
         next(createHttpError(400, "Tenant does not exist."));
@@ -91,14 +91,13 @@ export class TenantController {
 
   async destroy(req: CreateTenantRequest, res: Response, next: NextFunction) {
     const tenantId = req.params.id;
-
-    if (isNaN(Number(tenantId))) {
+    if (Number.isNaN(Number(tenantId))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
 
     try {
-      await this.tenantservie.deleteById(Number(tenantId));
+      await this.tenantservice.deleteById(Number(tenantId));
 
       logger.info("Tenant has been deleted", {
         id: Number(tenantId),

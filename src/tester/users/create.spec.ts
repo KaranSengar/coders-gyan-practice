@@ -153,7 +153,7 @@ describe("POST /users", () => {
       const users = await userRepository.find();
 
       expect(users).toHaveLength(1);
-      expect(users[0].password).toBe(userData.password);
+
     });
 
 

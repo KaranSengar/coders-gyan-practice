@@ -31,7 +31,7 @@ export default [
      4️⃣ PROJECT CODE (SRC)
      =============================== */
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}", "src/**/*.spec.ts"],
 
     /* 🌍 LANGUAGE ENV */
     languageOptions: {

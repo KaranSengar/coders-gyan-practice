@@ -10,6 +10,6 @@
     "rootDir": "./",
     "outDir": "./dist"
   },
-    "exclude": ["**/*.spec.ts", "tests"]
-
+  // "exclude": ["**/*.spec.ts", "tests"]
+  "include": ["src/**/*.ts", "src/**/*.spec.ts"] // test files bhi include
 }

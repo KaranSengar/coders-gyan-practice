@@ -23,7 +23,7 @@ RUN npm ci --ignore-scripts
 
 COPY --from=builder /app/dist ./
 
-EXPOSE 5500
+EXPOSE 5001
 
 CMD [ "node",  "src/index.js" ]
 

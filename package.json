@@ -19,7 +19,7 @@
     "migration:create": "typeorm-ts-node-commonjs migration:create -d src/data.source.ts",
     "prepare": "husky"
   },
-  "lint-staged": {
+  "lint": {
     "*.{ts,js}": [
       "prettier --write",
       "eslint --fix"

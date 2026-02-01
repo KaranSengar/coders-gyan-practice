@@ -68,7 +68,6 @@ export default [
         "error",
         { argsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/consistent-type-imports": "error",
 
       /* ---------- Promise Safety ---------- */
       "@typescript-eslint/no-floating-promises": "error",

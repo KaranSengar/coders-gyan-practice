@@ -9,17 +9,17 @@ export const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
+
   const statusCode = err.status || 500;
-  const message = err.message || "Internal Server Error";
+  const message = err.message || err.statusCode || "Internal Server Error";
 
   // Log error with Winston
   logger.error(`${req.method} ${req.path} - ${message}`, {
-    stack: err.stack,
+    stack: err.stack?.split("\n")[1],
     statusCode,
     method: req.method,
     path: req.path,
   });
-
   // Send response
   res.status(statusCode).json({
     success: false,

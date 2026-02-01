@@ -1,0 +1,20 @@
+# Official Node.js image use karo
+FROM node:18
+
+# Container ke andar working directory set karo
+WORKDIR /usr/src/app
+
+# package.json pehle copy karo (cache ke liye)
+COPY package*.json ./
+
+# Dependencies install karo
+RUN npm install
+
+# Baaki source code copy karo
+COPY . .
+
+# App kis port pe chalegi
+EXPOSE 5501
+
+# App run karne ka command
+CMD ["npm", "run", "dev"]

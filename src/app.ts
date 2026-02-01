@@ -5,13 +5,18 @@ import { globalErrorHandler } from "./config/globalhandler";
 import cookieParser from "cookie-parser";
 import tenantRoute from "./router/tenant.router";
 import UserRoute from "./router/user";
+import path from "node:path";
 export const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.static("public"));
 
+app.use(
+  "/.well-known",
+  express.static(
+    path.join(__dirname, "../public/.well-known")
+  ));
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "kar" });
 });

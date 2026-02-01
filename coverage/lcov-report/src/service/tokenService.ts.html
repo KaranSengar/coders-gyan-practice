@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>50/55</span>
+                <span class='fraction'>51/60</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>50/55</span>
+                <span class='fraction'>51/60</span>
             </div>
         
             
@@ -117,7 +117,13 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -129,6 +135,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
@@ -137,6 +146,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
@@ -155,7 +168,6 @@
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
@@ -171,68 +183,74 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { JwtPayload, sign } from "jsonwebtoken";
-import fs from 'fs'
-import path from "path";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { JwtPayload, sign } from "jsonwebtoken";
 import createHttpError from "http-errors";
 import { RefreshToken } from "../Entity/RefreshToken";
 import { User } from "../Entity/User.entiry";
 import { Repository } from "typeorm";
 import config from "../config";
+import fs from 'fs'
+import path from "path";
 export class TokenService {
-    constructor(private refreshtokenRepository: Repository&lt;RefreshToken&gt;) { }
+  constructor(private refreshtokenRepository: Repository&lt;RefreshToken&gt;) { }
 &nbsp;
-    generateAccessToken(payload: JwtPayload) {
-        let privatekey: Buffer
-        try {
-            privatekey = fs.readFileSync(path.join(__dirname, '../../certs/private.pem'))
-            //  console.log(privatekey)
-        } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
-<span class="cstat-no" title="statement not covered" >            const error = createHttpError(500, "Error while reading private key", err)</span>
-<span class="cstat-no" title="statement not covered" >            throw (error)</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-        const accessToken = sign(payload, privatekey, {
-            algorithm: 'RS256',
-            expiresIn: "1h",
-            issuer: "practiceset"
-        });
-        return accessToken
-    }
-    generateRefreshtoken(payload: JwtPayload) {
-        const refreshToken = sign(payload, config.REFRESH_TOKEN_SECRET, {
-            algorithm: "HS256",
-            expiresIn: "1y",
-            issuer: "practiceset",
-            jwtid: String(payload.id)
-        })
-        return refreshToken
-    }
-&nbsp;
-    async persistRefreshToken(user: User) {
-&nbsp;
-        // persistes the refresh token
-        //ham yaha intence pass krna hota hai kyoki reletionship hai typeorm internally kam karenga user id ko connect kr dega
-        const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365
-&nbsp;
-        const newRefreshtoken = await this.refreshtokenRepository.save({
-            user: user,
-            expiresAt: new Date(Date.now() + MS_IN_YEAR)
-        })
-        return newRefreshtoken
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    async deleteRefreshToken(tokenId: number) {</span>
-<span class="cstat-no" title="statement not covered" >        return await this.refreshtokenRepository.delete({ id: tokenId })</span>
+  generateAccessToken(payload: JwtPayload) {
+    let privatekey: Buffer;
+    /* if (!config.PRIVATE_KEY) {
+       const error = createHttpError(500, "error while reading private key");
+       throw error;
+     }*/
+    try {
+      privatekey = fs.readFileSync(path.join(__dirname, '../../certs/private.pem'));
+    } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
+<span class="cstat-no" title="statement not covered" >      const error = createHttpError(</span>
+<span class="cstat-no" title="statement not covered" >        500,</span>
+<span class="cstat-no" title="statement not covered" >        "Error while reading private key",</span>
+<span class="cstat-no" title="statement not covered" >        err,</span>
+<span class="cstat-no" title="statement not covered" >      );</span>
+<span class="cstat-no" title="statement not covered" >      throw error;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
+    const accessToken = sign(payload, privatekey, {
+      algorithm: "RS256",
+      expiresIn: "1h",
+      issuer: "practiceset",
+    });
+    return accessToken;
+  }
+  generateRefreshtoken(payload: JwtPayload) {
+    const refreshToken = sign(payload, config.REFRESH_TOKEN_SECRET, {
+      algorithm: "HS256",
+      expiresIn: "1y",
+      issuer: "practiceset",
+      jwtid: String(payload.id),
+    });
+    return refreshToken;
+  }
 &nbsp;
-}</pre></td></tr></table></pre>
+  async persistRefreshToken(user: User) {
+    // persistes the refresh token
+    //ham yaha intence pass krna hota hai kyoki reletionship hai typeorm internally kam karenga user id ko connect kr dega
+    const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365;
+&nbsp;
+    const newRefreshtoken = await this.refreshtokenRepository.save({
+      user: user,
+      expiresAt: new Date(Date.now() + MS_IN_YEAR),
+    });
+    return newRefreshtoken;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async deleteRefreshToken(tokenId: number) {</span>
+<span class="cstat-no" title="statement not covered" >    return await this.refreshtokenRepository.delete({ id: tokenId });</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-31T18:32:04.504Z
+                at 2026-02-01T14:46:26.730Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

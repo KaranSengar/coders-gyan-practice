@@ -9,7 +9,6 @@ export const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
-
   const statusCode = err.status || 500;
   const message = err.message || err.statusCode || "Internal Server Error";
 

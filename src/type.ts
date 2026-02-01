@@ -1,78 +1,75 @@
-import type { Request } from "express"
+import type { Request } from "express";
 
 export interface UserRequest {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-    role: string
-    tenantId?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  tenantId?: number;
 }
 
 export interface RegisterUser extends Request {
-    body: UserRequest
+  body: UserRequest;
 }
 
 export interface LoginRequest {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 export interface Loginuser extends Request {
-    body: LoginRequest
+  body: LoginRequest;
 }
 export interface AuthRequest extends Request {
-    auth: {
-        sub: string;
-        role: string;
-        id?: string;
-        tenant: string;
-        firstName: string;
-        lastName: string;
-        email: string;
-    };
+  auth: {
+    sub: string;
+    role: string;
+    id?: string;
+    tenant: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
 }
 
 export interface IRefreshTokenPayload {
-    id: string
+  id: string;
 }
 
-
 export interface ITenant {
-    name: string,
-    address: string
+  name: string;
+  address: string;
 }
 
 export interface CreateTenantRequest extends Request {
-    body: ITenant;
+  body: ITenant;
 }
 
 export interface CreateUserRequest extends Request {
-    body: UserRequest
+  body: UserRequest;
 }
 
-
-
 export interface LimitedUserData {
-    firstName: string;
-    lastName: string;
-    role: string;
-    email: string;
-    tenantId: number;
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+  tenantId: number;
 }
 
 export interface UpdateUserRequest extends Request {
-    body: LimitedUserData;
+  body: LimitedUserData;
 }
 
 export interface UserQueryParams {
-    perPage: number;
-    currentPage: number;
-    q: string;
-    role: string;
+  perPage: number;
+  currentPage: number;
+  q: string;
+  role: string;
 }
 
 export interface TenantQueryParams {
-    q: string;
-    perPage: number;
-    currentPage: number;
+  q: string;
+  perPage: number;
+  currentPage: number;
 }

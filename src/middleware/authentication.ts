@@ -3,6 +3,9 @@ import jwksClient from "jwks-rsa";
 import config from "../config";
 import { Request } from "express";
 console.log(config.JWKS_URI, "ye erro jwks ka hai");
+
+
+
 export default expressjwt({
   secret: jwksClient.expressJwtSecret({
     jwksUri: config.JWKS_URI!,

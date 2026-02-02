@@ -30,7 +30,7 @@ router.patch(
   canAccess([Role.ADMIN]),
   tenantValidator,
   (req: CreateTenantRequest, res: Response, next: NextFunction) =>
-    tenantcontroller.update(req, res, next),
+  tenantcontroller.update(req, res, next),
 );
 router.get("/:id", (req: Request, res: Response, next: NextFunction) =>
   tenantcontroller.getOne(req, res, next),

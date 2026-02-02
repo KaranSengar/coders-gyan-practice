@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { DataSource, Repository } from "typeorm";
 import { Tenant } from "../Entity/Tenant";
+import { logger } from "../config/logger";
 
 export const truncateTable = async (connection: DataSource) => {
   const entities = connection.entityMetadatas;
@@ -25,6 +26,7 @@ export const isjwt = (token: string | null): boolean => {
     });
     return true;
   } catch (err) {
+    logger.error(err)
     return false;
   }
 };

@@ -7,7 +7,7 @@ import { logger } from "../config/logger";
 import { IRefreshTokenPayload } from "../type";
 
 export default expressjwt({
-  secret: config.REFRESH_TOKEN_SECRET!,
+  secret: config.REFRESH_TOKEN_SECRET,
   algorithms: ["HS256"],
 
   getToken(req: Request) {

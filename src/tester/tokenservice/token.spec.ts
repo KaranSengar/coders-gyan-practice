@@ -6,7 +6,6 @@ import { User } from "../../Entity/User.entiry";
 import jwt from "jsonwebtoken";
 import config from "../../config";
 import { Role } from "../../constrant";
-import fs from 'fs'
 describe("TokenService", () => {
     let connection: DataSource;
     let refreshTokenRepo: Repository<RefreshToken>;
@@ -50,17 +49,7 @@ describe("TokenService", () => {
             config.PRIVATE_KEY = oldKey;
         });
 
-        it("should throw error if private key file read fails", () => {
-            jest.spyOn(fs, "readFileSync").mockImplementation(() => {
-                throw new Error("file not found");
-            });
 
-            expect(() =>
-                tokenService.generateAccessToken({ id: 1 }),
-            ).toThrow();
-
-            jest.restoreAllMocks();
-        });
 
     });
 

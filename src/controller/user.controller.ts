@@ -6,7 +6,7 @@ import createHttpError from "http-errors";
 import { logger } from "../config/logger";
 
 export class UserController {
-  constructor(private userservice: Userservice) {}
+  constructor(private readonly userservice: Userservice) { }
   async create(req: CreateUserRequest, res: Response, next: NextFunction) {
     console.log(req.body, "ye body se check krte kya arha hai");
     const result = validationResult(req);
@@ -44,7 +44,7 @@ export class UserController {
   }
   async getone(req: Request, res: Response, next: NextFunction) {
     const userId = req.params.id;
-    if (isNaN(Number(userId))) {
+    if (Number(isNaN(Number(userId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
@@ -67,7 +67,7 @@ export class UserController {
     }
     const { firstName, lastName, role, email, tenantId } = req.body;
     const userId = req.params.id;
-    if (isNaN(Number(userId))) {
+    if (Number(isNaN(Number(userId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
@@ -88,7 +88,7 @@ export class UserController {
   }
   async destroy(req: Request, res: Response, next: NextFunction) {
     const userId = req.params.id;
-    if (isNaN(Number(userId))) {
+    if (Number(isNaN(Number(userId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }

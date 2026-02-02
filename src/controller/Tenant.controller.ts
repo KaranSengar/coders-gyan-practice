@@ -6,7 +6,7 @@ import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 
 export class TenantController {
-  constructor(private tenantservie: TenantService) {}
+  constructor(private readonly tenantservie: TenantService) {}
   async create(req: CreateTenantRequest, res: Response, next: NextFunction) {
     // Validation
     const result = validationResult(req);
@@ -36,7 +36,7 @@ export class TenantController {
     const { name, address } = req.body;
     const tenantId = req.params.id;
 
-    if (isNaN(Number(tenantId))) {
+    if (Number(isNaN(Number(tenantId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
@@ -69,7 +69,7 @@ export class TenantController {
   async getOne(req: CreateTenantRequest, res: Response, next: NextFunction) {
     const tenantId = req.params.id;
 
-    if (isNaN(Number(tenantId))) {
+     if (Number(isNaN(Number(tenantId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }
@@ -92,7 +92,7 @@ export class TenantController {
   async destroy(req: CreateTenantRequest, res: Response, next: NextFunction) {
     const tenantId = req.params.id;
 
-    if (isNaN(Number(tenantId))) {
+   if (Number(isNaN(Number(tenantId)))) {
       next(createHttpError(400, "Invalid url param."));
       return;
     }

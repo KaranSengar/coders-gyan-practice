@@ -8,7 +8,7 @@ console.log(config.JWKS_URI, "ye erro jwks ka hai");
 
 export default expressjwt({
   secret: jwksClient.expressJwtSecret({
-    jwksUri: config.JWKS_URI!,
+    jwksUri: config.JWKS_URI,
     cache: true,
     rateLimit: true,
   }) as GetVerificationKey,

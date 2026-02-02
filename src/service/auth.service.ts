@@ -4,7 +4,7 @@ import type { LimitedUserData, UserRequest } from "../type";
 import createHttpError from "http-errors";
 import bcrypt from "bcryptjs";
 export class Userservice {
-  constructor(private userRepository: Repository<User>) {}
+  constructor(private readonly userRepository: Repository<User>) {}
   async create({
     firstName,
     lastName,

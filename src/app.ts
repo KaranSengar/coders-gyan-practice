@@ -7,6 +7,7 @@ import tenantRoute from "./router/tenant.router";
 import UserRoute from "./router/user";
 import path from "node:path";
 export const app = express();
+app.disable("x-powered-by");
 
 app.use(express.json());
 app.use(cookieParser());

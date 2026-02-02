@@ -19,10 +19,16 @@ interface Config {
   PRIVATE_KEY: string;
 }
 
-/* 🔥 decode base64 once here */
-const privateKey = process.env.PRIVATE_KEY_BASE64
-  ? Buffer.from(process.env.PRIVATE_KEY_BASE64, "base64").toString("utf8")
-  : "";
+const base64Key = process.env.PRIVATE_KEY;
+
+let privateKey = "";
+
+/* ✅ production safe logic */
+if (base64Key) {
+  privateKey = Buffer.from(base64Key, "base64").toString("utf8");
+} else if (NODE_ENV !== "test") {
+  throw new Error("PRIVATE_KEY_BASE64 missing in environment");
+}
 
 const config: Config = {
   PORT: Number(process.env.PORT) || 5000,
@@ -33,9 +39,9 @@ const config: Config = {
   POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || "password",
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || "secretpoll",
 
-  PRIVATE_KEY: privateKey,   // ✅ decoded key
+  PRIVATE_KEY: privateKey,
 
-  JWKS_URI: process.env.JWKS_URI!,
+  JWKS_URI: process.env.JWKS_URI || "",
   NODE_ENV: NODE_ENV as Config["NODE_ENV"],
 };
 

@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
-// 1️⃣ sabse pehle NODE_ENV read karo
+
 const NODE_ENV = process.env.NODE_ENV || "development";
-// 2️⃣ uske base pe correct env file load karo
+
 dotenv.config({
   path: `.env.${NODE_ENV}`,
 });
-// ---- rest same ----
+
 interface Config {
   PORT: number;
   NODE_ENV: "development" | "production" | "test";
@@ -18,6 +18,12 @@ interface Config {
   JWKS_URI: string;
   PRIVATE_KEY: string;
 }
+
+/* 🔥 decode base64 once here */
+const privateKey = process.env.PRIVATE_KEY_BASE64
+  ? Buffer.from(process.env.PRIVATE_KEY_BASE64, "base64").toString("utf8")
+  : "";
+
 const config: Config = {
   PORT: Number(process.env.PORT) || 5000,
   HOSTNAME: process.env.HOSTNAME || "localhost",
@@ -26,8 +32,10 @@ const config: Config = {
   POSTGRES_USER: process.env.POSTGRES_USER || "postgres",
   POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || "password",
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || "secretpoll",
-  PRIVATE_KEY: process.env.PRIVATE_KEY || "private key",
-  JWKS_URI: process.env.JWKS_URI!, // required
+
+  PRIVATE_KEY: privateKey,   // ✅ decoded key
+
+  JWKS_URI: process.env.JWKS_URI!,
   NODE_ENV: NODE_ENV as Config["NODE_ENV"],
 };
 
